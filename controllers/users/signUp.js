@@ -48,7 +48,7 @@ const signUp = async (req, res) => {
 
   sendEmailSendGrid(msg);
 
-  res.status(201).json({ email: newUser.email, name: newUser.name });
+  res.status(201).json({ email: newUser.email, username: newUser.username });
 };
 
 module.exports = signUp;
