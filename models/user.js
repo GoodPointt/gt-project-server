@@ -10,7 +10,7 @@ const subscriptions = ['starter', 'pro', 'business'];
 
 const userSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
     },
