@@ -2,7 +2,7 @@
 const URL = require('url');
 const axios = require('axios');
 const { User } = require('../../models/user');
-const { JsonWebTokenError } = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const googleRedirect = async (req, res) => {
@@ -52,7 +52,7 @@ const googleRedirect = async (req, res) => {
     id: newUser._id,
   };
 
-  const token = JsonWebTokenError.sign(payload, process.env.SECRET_KEY, {
+  const token = jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: '23h',
   });
 
