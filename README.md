@@ -8,8 +8,8 @@
 
 https://gt-project.onrender.com/api
 
-/reviews - GET [get all reviews]
-/reviews/own - GET [get own review]
-/reviews/own - POST [add new review]
-/reviews/own - PATCH [edit review]
-/reviews/own - DELETE [delete review]
+- /reviews - GET [get all reviews]
+- /reviews/own - GET [get own review]
+- /reviews/own - POST [add new review]
+- /reviews/own - PATCH [edit review]
+- /reviews/own - DELETE [delete review]
