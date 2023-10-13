@@ -1,14 +1,16 @@
-const { ctrlWrapper } = require("../../utils");
+const { ctrlWrapper } = require('../../utils');
 
-const signUp = require("./signUp");
-const logIn = require("./logIn");
-const getCurrent = require("./getCurrent");
-const logout = require("./logout");
-const changeSubscription = require("./changeSubscription");
-const updateAvatar = require("./updateAvatar");
-const verifyEmail = require("./verifyEmail");
-const resendVerifyEmail = require("./resendVerifyEmail");
-const sendResetPassword = require("./sendResetPassword");
+const signUp = require('./signUp');
+const logIn = require('./logIn');
+const getCurrent = require('./getCurrent');
+const logout = require('./logout');
+const changeSubscription = require('./changeSubscription');
+const updateAvatar = require('./updateAvatar');
+const verifyEmail = require('./verifyEmail');
+const resendVerifyEmail = require('./resendVerifyEmail');
+const sendResetPassword = require('./sendResetPassword');
+const googleAuth = require('./googleAuth');
+const googleRedirect = require('./googleRedirect');
 
 module.exports = {
   signUp: ctrlWrapper(signUp),
@@ -20,4 +22,6 @@ module.exports = {
   verifyEmail: ctrlWrapper(verifyEmail),
   resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   sendResetPassword: ctrlWrapper(sendResetPassword),
+  googleAuth: ctrlWrapper(googleAuth),
+  googleRedirect: ctrlWrapper(googleRedirect),
 };

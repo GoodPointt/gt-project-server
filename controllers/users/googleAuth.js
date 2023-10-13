@@ -1,5 +1,4 @@
 const queryString = require('querystring');
-const URL = require('url');
 
 const googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
@@ -14,7 +13,11 @@ const googleAuth = async (req, res) => {
     prompt: 'consent',
   });
 
+  console.log(stringifiedParams);
+
   return res.redirect(
-    `https://accounts.google.com/0/oauth2/v2/auth?${stringifiedParams}`
+    `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   );
 };
+
+module.exports = googleAuth;
