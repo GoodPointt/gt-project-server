@@ -3,6 +3,7 @@ const URL = require('url');
 const axios = require('axios');
 const { User } = require('../../models/user');
 const { JsonWebTokenError } = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
@@ -34,11 +35,15 @@ const googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
+  const password = '12345678';
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const userBody = {
     email: userData.data.email,
     username: userData.data.name,
     avatarURL: userData.data.picture,
+    password: hashedPassword,
   };
 
   const newUser = await User.create(userBody);
