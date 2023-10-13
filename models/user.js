@@ -3,16 +3,14 @@ const Joi = require("joi");
 
 const { handleMongooseError } = require("../utils");
 
-const emailRegexp =
-  /^((([0-9A-Za-z]{1}[-0-9A-z.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/u;
-
-const subscriptions = ["starter", "pro", "business"];
+const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+const phoneRegexp = /^[+\d-]{6,}$/;
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: [true, "Username is required"],
     },
     email: {
       type: String,
@@ -27,27 +25,24 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
       default: null,
     },
-
-    subscription: {
+    birthday: {
+      type: Date,
+      default: null,
+    },
+    skype: {
       type: String,
-      enum: subscriptions,
-      default: "starter",
+      default: null,
+    },
+    phone: {
+      type: String,
+      match: [phoneRegexp],
+      default: null,
     },
     token: {
       type: String,
       default: null,
-    },
-    verify: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: {
-      type: String,
-      default: null,
-      required: [true, "Verify token is required"],
     },
   },
   {
@@ -62,47 +57,46 @@ const User = model("users", userSchema);
 
 const emailVerifyJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
-    "string.base": `⚠️"email" should be a type of 'text'`,
-    "string.empty": `⚠️"email" cannot be an empty field`,
-    "string.pattern.base": `⚠️"email" is not valid`,
-    "any.required": `⚠️"email" is a required field`,
+    "string.base": `"email" should be a type of 'text'`,
+    "string.empty": `"email" cannot be an empty field`,
+    "string.pattern.base": `"email" is not valid`,
+    "any.required": `"email" is a required field`,
   }),
 });
 
 const userSignupJoiSchema = Joi.object({
-  name: Joi.string().required().messages({
-    "string.base": `⚠️"name" should be a type of 'text'`,
-    "string.empty": `⚠️"name" cannot be an empty field`,
-    "any.required": `⚠️"name" is a required field`,
+  username: Joi.string().required().messages({
+    "string.base": `"username" should be a type of 'text'`,
+    "string.empty": `"username" cannot be an empty field`,
+    "any.required": `"username" is a required field`,
   }),
   email: Joi.string().pattern(emailRegexp).required().messages({
-    "string.base": `⚠️"email" should be a type of 'text'`,
-    "string.empty": `⚠️"email" cannot be an empty field`,
-    "string.pattern.base": `⚠️"email" is not valid`,
-    "any.required": `⚠️"email" is a required field`,
+    "string.base": `"email" should be a type of 'text'`,
+    "string.empty": `"email" cannot be an empty field`,
+    "string.pattern.base": `"email" is not valid`,
+    "any.required": `"email" is a required field`,
   }),
   password: Joi.string().required().min(6).messages({
-    "string.base": `⚠️"password" should be a type of 'text'`,
-    "string.empty": `⚠️"password" cannot be an empty field`,
-    "string.min": `⚠️"password" should have a minimum length of {#limit}`,
-    "any.required": `⚠️"password" is a required field`,
+    "string.base": `"password" should be a type of 'text'`,
+    "string.empty": `"password" cannot be an empty field`,
+    "string.min": `"password" should have a minimum length of {#limit}`,
+    "any.required": `"password" is a required field`,
   }),
-  subscription: Joi.string(),
   token: Joi.string(),
 });
 
 const userLoginJoiSchema = Joi.object({
   email: Joi.string().required().pattern(emailRegexp).messages({
-    "string.base": `⚠️"email" should be a type of 'text'`,
-    "string.empty": `⚠️"email" cannot be an empty field`,
-    "string.pattern.base": `⚠️"email" is not valid`,
-    "any.required": `⚠️"email" is a required field`,
+    "string.base": `"email" should be a type of 'text'`,
+    "string.empty": `"email" cannot be an empty field`,
+    "string.pattern.base": `"email" is not valid`,
+    "any.required": `"email" is a required field`,
   }),
   password: Joi.string().required().min(6).messages({
-    "string.base": `⚠️"password" !should be a type of 'text'`,
-    "string.empty": `⚠️"password" !cannot be an empty field`,
-    "string.min": `⚠️"password" !should have a minimum length of {#limit}`,
-    "any.required": `⚠️"password" !is a required field`,
+    "string.base": `"password" !should be a type of 'text'`,
+    "string.empty": `"password" !cannot be an empty field`,
+    "string.min": `"password" !should have a minimum length of {#limit}`,
+    "any.required": `"password" !is a required field`,
   }),
   token: Joi.string(),
 });
@@ -116,18 +110,34 @@ const resetPasswordSchema = Joi.object({
   }),
 });
 
-const userChangeSubscriptionSchema = Joi.object({
-  subscription: Joi.string()
-    .valid(...subscriptions)
-    .required(),
+const editUserProfileJoiSchema = Joi.object({
+  username: Joi.string().messages({
+    "string.base": `"username" should be a type of 'text'`,
+    "string.empty": `"username" cannot be an empty field`,
+  }),
+  email: Joi.string().required().pattern(emailRegexp).messages({
+    "string.base": `"email" should be a type of 'text'`,
+    "string.empty": `"email" cannot be an empty field`,
+    "string.pattern.base": `"email" is not valid`,
+    "any.required": `"email" is a required field`,
+  }),
+  avatarURL: Joi.string(),
+  birthday: Joi.string(),
+  skype: Joi.string().messages({
+    "string.base": `"skype" should be a type of 'text'`,
+  }),
+  phone: Joi.string().min(6).pattern(phoneRegexp).messages({
+    "string.base": `"phone" should be a type of 'text'`,
+    "string.pattern.base": `"phone" is not valid`,
+  }),
 });
 
 const schemas = {
   userSignupJoiSchema,
   userLoginJoiSchema,
-  userChangeSubscriptionSchema,
   emailVerifyJoiSchema,
   resetPasswordSchema,
+  editUserProfileJoiSchema,
 };
 
 module.exports = { User, schemas };

@@ -1,5 +1,5 @@
 const { User } = require("../../models/user");
-const { sendEmailSendGrid } = require("../../utils");
+const { sendEmailSendGrid, HttpError } = require("../../utils");
 const { nanoid } = require("nanoid");
 const bcrypt = require("bcrypt");
 
