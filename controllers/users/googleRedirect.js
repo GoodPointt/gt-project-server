@@ -1,6 +1,8 @@
 // const queryString = require('querystring');
 const URL = require('url');
 const axios = require('axios');
+const { User } = require('../../models/user');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
@@ -12,8 +14,6 @@ const googleRedirect = async (req, res) => {
   const urlParams = urlObj.query;
 
   const code = urlParams.code;
-
-  console.log('code==>>', code);
 
   const tokenData = await axios({
     url: `https://oauth2.googleapis.com/token`,
@@ -27,8 +27,6 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  console.log('tokenData=>>> ', tokenData);
-
   const userData = await axios({
     url: 'https://www.googleapis.com/oauth2/v2/userinfo',
     method: 'get',
@@ -37,11 +35,25 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  console.log('userData=>>>>', userData);
+  const userBody = {
+    email: userData.data.email,
+    username: userData.data.name,
+    avatarURL: userData.data.picture,
+  };
 
-  return res.redirect(
-    `${process.env.FRONTEND_URL}?email=${userData.data.email}`
-  );
+  const newUser = await User.create(userBody);
+
+  const payload = {
+    id: newUser._id,
+  };
+
+  const token = JsonWebTokenError.sign(payload, process.env.SECRET_KEY, {
+    expiresIn: '23h',
+  });
+
+  await User.findByIdAndUpdate(newUser._id, { token });
+
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`);
 };
 
 module.exports = googleRedirect;

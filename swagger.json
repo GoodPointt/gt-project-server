@@ -22,7 +22,7 @@
       "description": "Authorization endpoints"
     },
     {
-      "username": "User",
+      "name": "User",
       "description": "User endpoints"
     },
     {
@@ -691,7 +691,7 @@
         "type": "object",
         "required": ["username", "email", "password"],
         "properties": {
-          "name": {
+          "username": {
             "type": "string",
             "description": "User's name",
             "example": "User"
@@ -815,7 +815,7 @@
 
       "EditUserRequest": {
         "type": "object",
-        "required": ["name", "email"],
+        "required": ["username", "email"],
         "properties": {
           "username": {
             "type": "string",
