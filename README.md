@@ -8,7 +8,9 @@
 
 https://gt-project.onrender.com/api
 
--/auth/sigup - POST [register]: 201 {token, {email, password}}
+-/auth/sigup - POST [register]
+-/auth/login - POST [login]
+-/auth/logout - POST [logout]
 
 - /reviews - GET [get all reviews]
 - /reviews/own - GET [get own review]
