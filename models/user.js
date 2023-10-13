@@ -1,10 +1,9 @@
-const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+const { Schema, model } = require('mongoose');
+const Joi = require('joi');
 
-const { handleMongooseError } = require("../utils");
+const { handleMongooseError } = require('../utils');
 
-const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-
+const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
   {
@@ -15,13 +14,13 @@ const userSchema = new Schema(
     email: {
       type: String,
       match: [emailRegexp],
-      required: [true, "Email is required"],
+      required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
       minLength: 6,
-      required: [true, "Password is required"],
+      required: [true, 'Password is required'],
     },
     avatarURL: {
       type: String,
@@ -50,9 +49,9 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.post("save", handleMongooseError);
+userSchema.post('save', handleMongooseError);
 
-const User = model("users", userSchema);
+const User = model('users', userSchema);
 
 const emailVerifyJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
@@ -101,15 +100,13 @@ const userLoginJoiSchema = Joi.object({
 });
 
 const resetPasswordSchema = Joi.object({
-  email: Joi.string().required().pattern(emailRegexp).messages({
-    "string.base": `⚠️"email" should be a type of 'text'`,
-    "string.empty": `⚠️"email" cannot be an empty field`,
-    "string.pattern.base": `⚠️"email" is not valid`,
-    "any.required": `⚠️"email" is a required field`,
-  }),
+  // email: Joi.string().required().pattern(emailRegexp).messages({
+  //   "string.base": `⚠️"email" should be a type of 'text'`,
+  //   "string.empty": `⚠️"email" cannot be an empty field`,
+  //   "string.pattern.base": `⚠️"email" is not valid`,
+  //   "any.required": `⚠️"email" is a required field`,
+  // }),
 });
-
-
 
 const schemas = {
   userSignupJoiSchema,
