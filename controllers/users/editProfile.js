@@ -1,10 +1,4 @@
-const { User } = require("../../models/user");
-const bcrypt = require("bcrypt");
-const path = require("path");
-const fs = require("fs/promises");
-const Jimp = require("jimp");
-
-const avatarsDir = path.join(__dirname, "../../public/avatars");
+const { User } = require('../../models/user');
 
 async function editProfile(req, res) {
   const userId = req.user._id;
@@ -14,7 +8,7 @@ async function editProfile(req, res) {
 
   const user = await User.findOne({ _id: { $ne: userId }, email: newEmail });
   if (user) {
-    return res.status(409).json({ message: "Email already exist" });
+    return res.status(409).json({ message: 'Email already exist' });
   }
 
   const newUserData = {
