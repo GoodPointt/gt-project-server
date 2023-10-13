@@ -1,47 +1,53 @@
-const express = require('express');
+const express = require("express");
 
-const { validateBody, authenticate, upload } = require('../../middlewares');
+const { validateBody, authenticate, upload } = require("../../middlewares");
 
-const { schemas } = require('../../models/user');
+const { schemas } = require("../../models/user");
 
-const ctrl = require('../../controllers/users');
+const ctrl = require("../../controllers/users");
 
 const router = express.Router();
 
 // upload.array('avatarURL', 8)
 // upload.fields({name: 'avatarURL', maxCount: 8}, {name: 'subAavatarURL', maxCount: 3});
 router.post(
-  '/signup',
-  upload.single('avatar'),
+  "/signup",
+  upload.single("avatar"),
   validateBody(schemas.userSignupJoiSchema),
   ctrl.signUp
 );
 
-router.get('/verify/:verificationToken', ctrl.verifyEmail);
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
 
 router.post(
-  '/verify',
+  "/verify",
   validateBody(schemas.emailVerifyJoiSchema),
   ctrl.resendVerifyEmail
 );
 
-router.post('/login', validateBody(schemas.userLoginJoiSchema), ctrl.logIn);
+router.post("/login", validateBody(schemas.userLoginJoiSchema), ctrl.logIn);
 
-router.get('/current', authenticate, ctrl.getCurrent);
+router.get("/current", authenticate, ctrl.getCurrent);
 
-router.post('/logout', authenticate, ctrl.logout);
+router.post("/logout", authenticate, ctrl.logout);
+
+router.post(
+  "/reset",
+  validateBody(schemas.resetPasswordSchema),
+  ctrl.sendResetPassword
+);
 
 router.patch(
-  '/',
+  "/",
   authenticate,
   validateBody(schemas.userChangeSubscriptionSchema),
   ctrl.changeSubscription
 );
 
 router.patch(
-  '/avatars',
+  "/avatars",
   authenticate,
-  upload.single('avatar'),
+  upload.single("avatar"),
   ctrl.updateAvatar
 );
 
