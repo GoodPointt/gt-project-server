@@ -109,11 +109,7 @@ const resetPasswordSchema = Joi.object({
   }),
 });
 
-const userChangeSubscriptionSchema = Joi.object({
-  subscription: Joi.string()
-    .valid(...subscriptions)
-    .required(),
-});
+
 
 const schemas = {
   userSignupJoiSchema,
