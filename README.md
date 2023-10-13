@@ -8,7 +8,7 @@
 
 https://gt-project.onrender.com/api
 
-- /auth/sigup - POST [register]
+- /auth/signup - POST [register]
 - /auth/login - POST [login]
 - /auth/logout - POST [logout]
 
