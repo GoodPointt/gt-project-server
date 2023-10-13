@@ -10,6 +10,8 @@ const verifyEmail = require('./verifyEmail');
 const resendVerifyEmail = require('./resendVerifyEmail');
 const sendResetPassword = require('./sendResetPassword');
 const editProfile = require('./editProfile');
+const googleAuth = require('./googleAuth');
+const googleRedirect = require('./googleRedirect');
 
 module.exports = {
   signUp: ctrlWrapper(signUp),
@@ -22,4 +24,6 @@ module.exports = {
   resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   sendResetPassword: ctrlWrapper(sendResetPassword),
   editProfile: ctrlWrapper(editProfile),
+  googleAuth: ctrlWrapper(googleAuth),
+  googleRedirect: ctrlWrapper(googleRedirect),
 };
