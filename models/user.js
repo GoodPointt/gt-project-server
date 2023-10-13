@@ -123,9 +123,7 @@ const editUserProfileJoiSchema = Joi.object({
   }),
   avatarURL: Joi.string(),
   birthday: Joi.string(),
-  skype: Joi.string().messages({
-    'string.base': `"skype" should be a type of 'text'`,
-  }),
+  skype: Joi.string(),
   phone: Joi.string().min(6).pattern(phoneRegexp).messages({
     'string.base': `"phone" should be a type of 'text'`,
     'string.pattern.base': `"phone" is not valid`,
