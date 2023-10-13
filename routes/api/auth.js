@@ -22,8 +22,6 @@ router.post('/signup', validateBody(schemas.userSignupJoiSchema), ctrl.signUp);
 
 router.post('/login', validateBody(schemas.userLoginJoiSchema), ctrl.logIn);
 
-router.get('/current', authenticate, ctrl.getCurrent);
-
 router.post('/logout', authenticate, ctrl.logout);
 
 router.post(

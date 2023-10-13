@@ -4,6 +4,7 @@ const Joi = require('joi');
 const { handleMongooseError } = require('../utils');
 
 const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+const phoneRegexp = /^[+\d-]{6,}$/;
 
 const userSchema = new Schema(
   {
@@ -36,6 +37,7 @@ const userSchema = new Schema(
     },
     phone: {
       type: String,
+      match: [phoneRegexp],
       default: null,
     },
     token: {
@@ -100,12 +102,34 @@ const userLoginJoiSchema = Joi.object({
 });
 
 const resetPasswordSchema = Joi.object({
-  // email: Joi.string().required().pattern(emailRegexp).messages({
-  //   "string.base": `⚠️"email" should be a type of 'text'`,
-  //   "string.empty": `⚠️"email" cannot be an empty field`,
-  //   "string.pattern.base": `⚠️"email" is not valid`,
-  //   "any.required": `⚠️"email" is a required field`,
-  // }),
+  email: Joi.string().required().pattern(emailRegexp).messages({
+    'string.base': `⚠️"email" should be a type of 'text'`,
+    'string.empty': `⚠️"email" cannot be an empty field`,
+    'string.pattern.base': `⚠️"email" is not valid`,
+    'any.required': `⚠️"email" is a required field`,
+  }),
+});
+
+const editUserProfileJoiSchema = Joi.object({
+  username: Joi.string().messages({
+    'string.base': `"username" should be a type of 'text'`,
+    'string.empty': `"username" cannot be an empty field`,
+  }),
+  email: Joi.string().required().pattern(emailRegexp).messages({
+    'string.base': `"email" should be a type of 'text'`,
+    'string.empty': `"email" cannot be an empty field`,
+    'string.pattern.base': `"email" is not valid`,
+    'any.required': `"email" is a required field`,
+  }),
+  avatarURL: Joi.string(),
+  birthday: Joi.string(),
+  skype: Joi.string().messages({
+    'string.base': `"skype" should be a type of 'text'`,
+  }),
+  phone: Joi.string().min(6).pattern(phoneRegexp).messages({
+    'string.base': `"phone" should be a type of 'text'`,
+    'string.pattern.base': `"phone" is not valid`,
+  }),
 });
 
 const schemas = {
@@ -113,6 +137,7 @@ const schemas = {
   userLoginJoiSchema,
   emailVerifyJoiSchema,
   resetPasswordSchema,
+  editUserProfileJoiSchema,
 };
 
 module.exports = { User, schemas };

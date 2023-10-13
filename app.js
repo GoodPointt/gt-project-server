@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
 const reviewsRouter = require('./routes/api/reviews');
+const usersRouter = require('./routes/api/users');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static('public'));
 
 app.use('/api/auth', authRouter);
 app.use('/api/reviews', reviewsRouter);
+app.use('/api/users', usersRouter);
 
 app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument));
 
