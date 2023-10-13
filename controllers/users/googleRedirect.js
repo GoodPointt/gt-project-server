@@ -1,13 +1,15 @@
-const queryString = require('querystring');
-// const URL = require('url');
+// const queryString = require('querystring');
+const URL = require('url');
 const axios = require('axios');
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
 
-  const urlObj = new URL(fullUrl);
+  // const urlObj = new URL(fullUrl);
+  const urlObj = URL.parse(fullUrl, true);
 
-  const urlParams = queryString.parse(urlObj.search);
+  // const urlParams = queryString.parse(urlObj.search);
+  const urlParams = urlObj.query;
 
   const code = urlParams.code;
 
