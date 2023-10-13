@@ -4,7 +4,6 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const contactsRouter = require('./routes/api/contacts');
 const authRouter = require('./routes/api/auth');
 const reviewsRouter = require('./routes/api/reviews');
 
@@ -17,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use('/api/contacts', contactsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/reviews', reviewsRouter);
 
