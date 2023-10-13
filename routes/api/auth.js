@@ -51,4 +51,12 @@ router.patch(
   ctrl.updateAvatar
 );
 
+router.patch(
+  "/users/edit",
+  authenticate,
+  upload.single("avatar"),
+  validateBody(schemas.userProfileEditJoiSchema),
+  ctrl.editProfile
+);
+
 module.exports = router;
