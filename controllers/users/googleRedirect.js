@@ -11,7 +11,7 @@ const googleRedirect = async (req, res) => {
 
   const code = urlParams.code;
 
-  console.log(code);
+  console.log('code==>>', code);
 
   const tokenData = await axios({
     url: `https://oauth2.googleapis.com/token`,
@@ -24,6 +24,9 @@ const googleRedirect = async (req, res) => {
       code,
     },
   });
+
+  console.log('tokenData=>>> ', tokenData);
+
   const userData = await axios({
     url: 'https://www.googleapis.com/oauth2/v2/userinfo',
     method: 'get',
@@ -32,7 +35,7 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  console.log(userData);
+  console.log('userData=>>>>', userData);
 
   return res.redirect(
     `${process.env.FRONTEND_URL}?email=${userData.data.email}`

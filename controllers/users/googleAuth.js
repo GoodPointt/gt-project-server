@@ -13,8 +13,6 @@ const googleAuth = async (req, res) => {
     prompt: 'consent',
   });
 
-  console.log(stringifiedParams);
-
   return res.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   );
