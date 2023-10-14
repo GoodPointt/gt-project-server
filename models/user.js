@@ -25,24 +25,24 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      default: '',
+      default: null,
     },
     birthday: {
-      type: Date,
-      default: '',
+      type: String,
+      default: null,
     },
     skype: {
       type: String,
-      default: '',
+      default: null,
     },
     phone: {
       type: String,
       match: [phoneRegexp],
-      default: '',
+      default: null,
     },
     token: {
       type: String,
-      default: '',
+      default: null,
     },
   },
   {

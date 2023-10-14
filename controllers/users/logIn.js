@@ -29,10 +29,10 @@ const logIn = async (req, res) => {
         user: {
             email: user.email,
             username: user.username,
-            avatarURL: user.avatarURL,
-            birthday: user.birthday,
-            skype: user.skype,
-            phone: user.phone,
+            // avatarURL: user.avatarURL,
+            // birthday: user.birthday,
+            // skype: user.skype,
+            // phone: user.phone,
         },
     });
 };
