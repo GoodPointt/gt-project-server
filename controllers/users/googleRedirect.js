@@ -1,4 +1,4 @@
-// const URL = require('url');
+const URL = require('url');
 const axios = require('axios');
 const { User } = require('../../models/user');
 const jwt = require('jsonwebtoken');
