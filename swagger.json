@@ -132,15 +132,147 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User logout",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
+        "security": { "Bearer": [] },
+        "requestBody": {
+          "description": "Logout object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
         "responses": {
-          "204": {
-            "description": "Successful operation",
+          "200": {
+            "description": "Logout success",
             "content": {}
           },
           "401": {
             "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/reset": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User password reset",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
+        "security": { "Bearer": [] },
+        "requestBody": {
+          "description": "Reset password object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset email send success",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User refresh",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
+        "security": { "Bearer": [] },
+        "requestBody": {
+          "description": "Refresh object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User google auth",
+        "responses": {
+          "200": {},
+          "400": {
+            "description": "Bad redirect route",
             "content": {}
           },
           "500": {
@@ -180,7 +312,7 @@
       }
     },
 
-    "/users": {
+    "/users/edit": {
       "patch": {
         "tags": ["User"],
         "summary": "Edit user info",
@@ -271,8 +403,18 @@
       "get": {
         "tags": ["Reviews"],
         "summary": "Get own review",
-        "parameters": [],
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -308,7 +450,17 @@
       "post": {
         "tags": ["Reviews"],
         "summary": "Add own review",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Review's object",
@@ -364,7 +516,17 @@
       "patch": {
         "tags": ["Reviews"],
         "summary": "Update own review",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Review's object",
@@ -416,7 +578,17 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete own review",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -728,6 +900,26 @@
                 "type": "string",
                 "description": "User's email",
                 "example": "user@example.com"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar",
+                "example": "https://res.cloudinary.com/doe2xjnlr/image/upload/v1692301439/avatars/IMG_0041.JPG.jpg"
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype",
+                "example": "UserSkype-example"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's birthday",
+                "example": "29.02.1900"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone",
+                "example": "+3097-12-12-121"
               }
             }
           }
@@ -751,6 +943,42 @@
         }
       },
 
+      "LogoutRequest": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's _id",
+            "example": "652a655e8ec5354a9a37f333"
+          }
+        }
+      },
+
+      "ResetRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "user@example.com"
+          }
+        }
+      },
+
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
+          }
+        }
+      },
+
       "LoginResponse": {
         "type": "object",
         "properties": {
@@ -759,7 +987,7 @@
             "description": "User's token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
           },
-          "username": {
+          "user": {
             "type": "object",
             "properties": {
               "username": {
@@ -787,10 +1015,36 @@
                 "description": "User's skype",
                 "example": "skype"
               },
-              "avatar": {
+              "avatarURL": {
                 "type": "string",
                 "description": "User's avatar",
                 "example": "https://res.cloudinary.com/doe2xjnlr/image/upload/v1692301439/avatars/IMG_0041.JPG.jpg"
+              }
+            }
+          }
+        }
+      },
+
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "User's name",
+                "example": "User"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "example": "user@example.com"
               }
             }
           }
@@ -953,7 +1207,7 @@
                   "description": "Users's name",
                   "example": "User"
                 },
-                "avatar": {
+                "avatarURL": {
                   "type": "string",
                   "description": "User's avatar",
                   "example": ""
