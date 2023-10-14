@@ -6,6 +6,10 @@ const { handleMongooseError } = require('../utils');
 
 const priorities = ['low', 'medium', 'high'];
 const categories = ['to-do', 'in progress', 'done'];
+const dateFormats = {
+  day: 'HH:mm',
+  year: 'yyyy-MM-dd',
+};
 
 const tasksSchema = new Schema(
   {
@@ -86,69 +90,62 @@ tasksSchema.post('save', handleMongooseError);
 const Task = model('task', tasksSchema);
 
 const taskJoiSchema = Joi.object({
-  title: Joi.string().required().max(250).messages({
-    'string.base': `"title" !should be a type of 'text'`,
-    'string.empty': `"title" !cannot be an empty field`,
-    'string.max': `"title" !should have a maximum length of {#limit}`,
-    'any.required': `"title" !is a required field`,
-  }),
-  end: Joi.string()
+  title: Joi.string().required().max(250),
+  start: Joi.string().required(),
+  end: Joi.string().required(),
+  priority: Joi.string()
     .required()
-    .custom((date, helper) => {
-      const parsedDate = parse(date, 'HH:mm', new Date());
-      if (!isValid(parsedDate)) {
-        return helper.message(
-          "Invalid start time format. Use HH:mm (e.g., '09:00')."
-        );
-      }
-      const { start } = helper.state.ancestors[0];
-
-      const startValue = parse(start, 'HH:mm', new Date());
-      if (parsedDate <= startValue) {
-        return helper.message('End time cannot be smaller than start time.');
-      }
-    }),
-  start: Joi.string()
-    .required()
-    .custom((date, helper) => {
-      const parsedDate = parse(date, 'HH:mm', new Date());
-      if (!isValid(parsedDate)) {
-        return helper.message(
-          "Invalid start time format. Use HH:mm (e.g., '09:00')."
-        );
-      }
-    })
+    .valid('low', 'medium', 'high')
+    .default('low')
     .messages({
-      'string.base': `"start" !should be a type of 'text'`,
-      'string.empty': `"start" !cannot be an empty field`,
-      'any.required': `"start" !is a required field`,
+      'any.only': `{#label} !must be one of "low", "medium" or "high", but got "{#value}"`,
     }),
-  priority: Joi.string().required().valid('low', 'medium', 'high').messages({
-    'string.base': `"priority" !should be a type of 'text'`,
-    'string.empty': `"priority" !cannot be an empty field`,
-    'any.required': `"priority" !is a required field`,
-    'any.only': `"priority" !must be one of "low", "medium", or "high"`,
-  }),
-  date: Joi.string()
-    .required()
-    .custom((date, helper) => {
-      const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
-      if (!isValid(parsedDate)) {
-        return helper.message(
-          "Invalid date format.  Use yyyy-MM-dd (e.g., '2023-01-01')."
-        );
-      }
-    }),
+  date: Joi.string().required(),
+
   category: Joi.string()
     .required()
     .valid('to-do', 'in progress', 'done')
+    .default('to-do')
     .messages({
-      'string.base': `"category" !should be a type of 'text'`,
-      'string.empty': `"category" !cannot be an empty field`,
-      'any.required': `"category" !is a required field`,
-      'any.only': `"category" !must be one of "to-do", "in-progress", or "done"`,
+      'any.only': `{#label} !must be one of "to-do", "in-progress", or "done", but got "{#value}"`,
     }),
-});
+})
+  .custom((value, helper) => {
+    const { start, end, date } = value;
+
+    const parsedStart = parse(start, dateFormats.day, new Date());
+
+    if (!isValid(parsedStart)) {
+      return helper.message(
+        `Invalid start time format ${start}. Use HH:mm (e.g., '09:00').`
+      );
+    }
+
+    const parsedEnd = parse(end, dateFormats.day, new Date());
+    if (!isValid(parsedEnd)) {
+      return helper.message(
+        `Invalid start time format ${end}. Use HH:mm (e.g., '09:00').`
+      );
+    }
+    if (parsedEnd <= parsedStart) {
+      return helper.message(
+        `End time ${end} must be later than start time ${start}.`
+      );
+    }
+
+    const parsedDate = parse(date, dateFormats.year, new Date());
+    if (!isValid(parsedDate)) {
+      return helper.message(
+        `Invalid date format ${date}.  Use yyyy-MM-dd (e.g., '2023-01-01').`
+      );
+    }
+  })
+  .messages({
+    'string.base': `{#label} !should be a type of 'text'`,
+    'string.empty': `{#label} !cannot be an empty field`,
+    'any.required': `{#label} !is a required field`,
+    'string.max': `{#label} !should have a maximum length of {#limit}`,
+  });
 
 module.exports = {
   Task,
