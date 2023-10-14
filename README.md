@@ -6,14 +6,6 @@
 - `yarn start lint:fix` &mdash; same as the previous command but fixes simple linting errors automatically.
 - `yarn test` &mdash; run jest tests.
 
-https://gt-project.onrender.com/api
+- API_URL https://gt-project.onrender.com/api
 
-- /auth/signup - POST [register]
-- /auth/login - POST [login]
-- /auth/logout - POST [logout]
-
-- /reviews - GET [get all reviews]
-- /reviews/own - GET [get own review]
-- /reviews/own - POST [add new review]
-- /reviews/own - PATCH [edit review]
-- /reviews/own - DELETE [delete review]
+- API_DOCS https://gt-project.onrender.com/api/docs
