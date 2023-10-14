@@ -4,7 +4,7 @@ const Joi = require('joi');
 const { handleMongooseError } = require('../utils');
 
 const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-const phoneRegexp = /^[+\d-]{6,}$/;
+// const phoneRegexp = /^[+\d-]{6,}$/;
 
 const userSchema = new Schema(
   {
@@ -37,7 +37,7 @@ const userSchema = new Schema(
     },
     phone: {
       type: String,
-      match: [phoneRegexp],
+      // match: [phoneRegexp],
       default: null,
     },
     token: {
@@ -121,13 +121,15 @@ const editUserProfileJoiSchema = Joi.object({
     'string.pattern.base': `"email" is not valid`,
     'any.required': `"email" is a required field`,
   }),
-  avatarURL: Joi.string(),
-  birthday: Joi.string(),
-  skype: Joi.string(),
-  phone: Joi.string().min(6).pattern(phoneRegexp).messages({
-    'string.base': `"phone" should be a type of 'text'`,
-    'string.pattern.base': `"phone" is not valid`,
-  }),
+  avatarURL: Joi.string().min(0),
+  birthday: Joi.string().min(0),
+  skype: Joi.string().min(0),
+  phone: Joi.string().min(0)
+    // .pattern(phoneRegexp)
+    .messages({
+      'string.base': `"phone" should be a type of 'text'`,
+      'string.pattern.base': `"phone" is not valid`,
+    }),
 });
 
 const refreshUserJoiSchema = Joi.object({

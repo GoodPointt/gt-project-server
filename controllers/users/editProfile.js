@@ -4,7 +4,7 @@ async function editProfile(req, res) {
   const userId = req.user._id;
   const { email: newEmail } = req.body;
 
-  //   const avatar = req.file ? req.file.path : null;
+  const avatar = req.file ? req.file.path : null;
 
   const user = await User.findOne({ _id: { $ne: userId }, email: newEmail });
   if (user) {
@@ -13,7 +13,7 @@ async function editProfile(req, res) {
 
   const newUserData = {
     ...req.body,
-    // avatar
+    avatarURL: avatar
   };
   const newUser = await User.findByIdAndUpdate(userId, newUserData, {
     new: true,
@@ -25,7 +25,7 @@ async function editProfile(req, res) {
     birthday: newUser.birthday,
     phone: newUser.phone,
     skype: newUser.skype,
-    // avatarURL: newUser.avatar,
+    avatarURL: newUser.avatarURL,
   });
 }
 
