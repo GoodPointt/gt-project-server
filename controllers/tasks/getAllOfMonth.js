@@ -5,6 +5,10 @@ const getAllOfMonth = async (req, res) => {
   const { _id: owner } = req.user;
   const { date } = req.query;
 
+  if (!date) {
+    throw HttpError(400, 'Bad Request');
+  }
+
   const result = await Task.find(
     { owner, date: { $regex: date, $options: 'i' } },
     '-createdAt -updatedAt'
