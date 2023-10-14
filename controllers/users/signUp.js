@@ -29,6 +29,10 @@ const signUp = async (req, res) => {
     user: {
       email: newUser.email,
       username: newUser.username,
+      avatarURL: user.avatarURL,
+      birthday: user.birthday,
+      skype: user.skype,
+      phone: user.phone,
     },
   });
 };
