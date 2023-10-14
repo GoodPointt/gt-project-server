@@ -4,6 +4,7 @@ const axios = require('axios');
 const { User } = require('../../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { nanoid } = require('nanoid');
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
@@ -35,7 +36,8 @@ const googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-  const password = '12345678';
+
+  const password = nanoid();
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -49,12 +51,9 @@ const googleRedirect = async (req, res) => {
       expiresIn: '23h',
     });
 
-    return res.redirect(`${process.env.FRONTEND_URL}`).json({
-      user: {
-        email: user.email,
-      },
-      token,
-    });
+    await User.findByIdAndUpdate(user._id, { token });
+
+    return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`);
   }
 
   const userBody = {
@@ -76,14 +75,7 @@ const googleRedirect = async (req, res) => {
 
   await User.findByIdAndUpdate(newUser._id, { token });
 
-  return res.redirect(`${process.env.FRONTEND_URL}`).json({
-    user: {
-      email: userData.data.email,
-      username: userData.data.name,
-      avatarURL: userData.data.picture,
-    },
-    token,
-  });
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`);
 };
 
 module.exports = googleRedirect;

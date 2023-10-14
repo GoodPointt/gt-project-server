@@ -44,6 +44,12 @@ router.post(
 //   ctrl.updateAvatar
 // );
 
+router.post(
+  '/refresh',
+  validateBody(schemas.refreshUserJoiSchema),
+  ctrl.refresh
+);
+
 router.get('/google', ctrl.googleAuth);
 router.get('/google-redirect', ctrl.googleRedirect);
 

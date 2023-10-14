@@ -130,12 +130,17 @@ const editUserProfileJoiSchema = Joi.object({
   }),
 });
 
+const refreshUserJoiSchema = Joi.object({
+  token: Joi.string().required(),
+});
+
 const schemas = {
   userSignupJoiSchema,
   userLoginJoiSchema,
   emailVerifyJoiSchema,
   resetPasswordSchema,
   editUserProfileJoiSchema,
+  refreshUserJoiSchema,
 };
 
 module.exports = { User, schemas };
