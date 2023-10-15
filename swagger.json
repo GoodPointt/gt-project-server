@@ -1143,7 +1143,7 @@
             "description": "User's skype",
             "example": "skype"
           },
-          "avatar": {
+          "avatarURL": {
             "type": "string",
             "format": "binary",
             "description": "User's avatar",
@@ -1192,7 +1192,7 @@
             "description": "User's skype",
             "example": "skype"
           },
-          "avatar": {
+          "avatarURL": {
             "type": "string",
             "description": "User's avatar",
             "example": "1.jpg"
