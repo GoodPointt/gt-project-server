@@ -1077,7 +1077,7 @@
             "example": "user@example.com"
           },
           "birthday": {
-            "type": "date",
+            "type": "string",
             "description": "User's birthday",
             "example": "02/01/1998"
           },
