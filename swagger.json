@@ -364,6 +364,58 @@
       }
     },
 
+    "/users/edit/password": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Edit user password, min 6 characters",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password change success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditPasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found user's id",
+            "content": {}
+          },
+          "409": {
+            "description": "Email already is use",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
     "/reviews": {
       "get": {
         "tags": ["Reviews"],
@@ -1100,6 +1152,18 @@
         }
       },
 
+      "EditPasswordRequest": {
+        "type": "object",
+        "required": ["password"],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty"
+          }
+        }
+      },
+
       "EditUserResponse": {
         "type": "object",
         "properties": {
@@ -1132,6 +1196,17 @@
             "type": "string",
             "description": "User's avatar",
             "example": "1.jpg"
+          }
+        }
+      },
+
+      "EditPasswordResponse": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
           }
         }
       },
