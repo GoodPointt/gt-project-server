@@ -103,12 +103,21 @@ const userLoginJoiSchema = Joi.object({
 
 const resetPasswordSchema = Joi.object({
   email: Joi.string().required().pattern(emailRegexp).messages({
-    'string.base': `⚠️"email" should be a type of 'text'`,
-    'string.empty': `⚠️"email" cannot be an empty field`,
-    'string.pattern.base': `⚠️"email" is not valid`,
-    'any.required': `⚠️"email" is a required field`,
+    'string.base': `"email" should be a type of 'text'`,
+    'string.empty': `"email" cannot be an empty field`,
+    'string.pattern.base': `"email" is not valid`,
+    'any.required': `"email" is a required field`,
   }),
 });
+
+const changePasswordSchema = Joi.object({
+  password: Joi.string().required().min(6).messages({
+    'string.base': `"password" should be a type of 'text'`,
+    'string.empty': `"password" cannot be an empty field`,
+    'string.min': `"password" should have a minimum length of {#limit}`,
+    // 'any.required': `"password" is a required field`,
+  }),
+})
 
 const editUserProfileJoiSchema = Joi.object({
   username: Joi.string().messages({
@@ -143,6 +152,7 @@ const schemas = {
   resetPasswordSchema,
   editUserProfileJoiSchema,
   refreshUserJoiSchema,
+  changePasswordSchema
 };
 
 module.exports = { User, schemas };

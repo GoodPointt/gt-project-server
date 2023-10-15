@@ -18,4 +18,6 @@ router.patch(
   ctrl.editProfile
 );
 
+router.patch('/edit/password', authenticate, validateBody(schemas.changePasswordSchema), ctrl.changePassword)
+
 module.exports = router;

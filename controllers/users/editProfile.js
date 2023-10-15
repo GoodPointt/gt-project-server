@@ -1,32 +1,35 @@
+const { HttpError } = require('../../middlewares');
 const { User } = require('../../models/user');
 
-async function editProfile(req, res) {
-  const userId = req.user._id;
+const editProfile = async (req, res) => {
+  const { _id } = req.user;
   const { email: newEmail } = req.body;
+  const avatarURL = req.file ? req.file.path : '';
 
-  const avatar = req.file ? req.file.path : null;
+  const user = await User.findOne({ _id: { $ne: _id }, email: newEmail });
 
-  const user = await User.findOne({ _id: { $ne: userId }, email: newEmail });
   if (user) {
-    return res.status(409).json({ message: 'Email already exist' });
+    throw HttpError(409, 'Email already is use');
   }
 
-  const newUserData = {
-    ...req.body,
-    avatarURL: avatar
-  };
-  const newUser = await User.findByIdAndUpdate(userId, newUserData, {
+  const newDataUser = avatarURL ? { ...req.body, avatarURL } : req.body;
+
+  const editedUser = await User.findByIdAndUpdate(_id, newDataUser, {
     new: true,
   });
 
+  if (!editedUser) {
+    throw HttpError(404, "Not found user's id");
+  }
+
   res.status(200).json({
-    username: newUser.username,
-    email: newUser.email,
-    birthday: newUser.birthday,
-    phone: newUser.phone,
-    skype: newUser.skype,
-    avatarURL: newUser.avatarURL,
+    username: editedUser.username,
+    email: editedUser.email,
+    birthday: editedUser.birthday,
+    phone: editedUser.phone,
+    skype: editedUser.skype,
+    avatarURL: editedUser.avatarURL,
   });
-}
+};
 
 module.exports = editProfile;

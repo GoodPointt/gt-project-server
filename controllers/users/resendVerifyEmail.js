@@ -4,7 +4,6 @@ const { BASE_URL } = process.env;
 
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   const user = await User.findOne({ email });
   if (!user) throw HttpError(401, "Email not found");
   if (user.verify) throw HttpError(401, "Email already verified");
