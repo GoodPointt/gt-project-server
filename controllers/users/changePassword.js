@@ -8,7 +8,7 @@ const changePassword = async (req, res) => {
     console.log("pass", password)
     const hashedNewPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.findByIdAndUpdate(_id, { password }, { new: true })
+    const user = await User.findByIdAndUpdate(_id, { password: hashedNewPassword }, { new: true })
     console.log("user", user.password)
     if (!user) throw HttpError(404)
 
