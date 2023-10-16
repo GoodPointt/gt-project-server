@@ -20,4 +20,6 @@ router.patch(
 
 router.patch('/edit/password', authenticate, validateBody(schemas.changePasswordSchema), ctrl.changePassword)
 
+router.delete('/edit/delete-user', authenticate, validateBody(schemas.deleteUserSchema), ctrl.deleteUser)
+
 module.exports = router;
