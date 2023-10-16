@@ -316,7 +316,17 @@
       "patch": {
         "tags": ["User"],
         "summary": "Edit user info",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "User's object",
@@ -368,7 +378,17 @@
       "patch": {
         "tags": ["User"],
         "summary": "Edit user password, min 6 characters",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "User's object",
@@ -388,6 +408,68 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EditPasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found user's id",
+            "content": {}
+          },
+          "409": {
+            "description": "Email already is use",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/users/edit/delete-user": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The token issued to the current user."
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "`User ${email}  delete success`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
                 }
               }
             }
@@ -1164,6 +1246,18 @@
         }
       },
 
+      "DeleteUserRequest": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "652a655e8ec5354a9a37f333"
+          }
+        }
+      },
+
       "EditUserResponse": {
         "type": "object",
         "properties": {
@@ -1196,6 +1290,17 @@
             "type": "string",
             "description": "User's avatar",
             "example": "1.jpg"
+          }
+        }
+      },
+
+      "DeleteUserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "",
+            "example": "User ${email} delete success"
           }
         }
       },

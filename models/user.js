@@ -145,6 +145,10 @@ const refreshUserJoiSchema = Joi.object({
   token: Joi.string().required(),
 });
 
+const deleteUserSchema = Joi.object({
+  _id: Joi.string().required(),
+})
+
 const schemas = {
   userSignupJoiSchema,
   userLoginJoiSchema,
@@ -152,7 +156,8 @@ const schemas = {
   resetPasswordSchema,
   editUserProfileJoiSchema,
   refreshUserJoiSchema,
-  changePasswordSchema
+  changePasswordSchema,
+  deleteUserSchema
 };
 
 module.exports = { User, schemas };
