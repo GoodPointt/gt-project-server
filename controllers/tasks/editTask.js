@@ -2,7 +2,6 @@ const { Task } = require('../../models/task');
 const { HttpError } = require('../../utils');
 
 const editTask = async (req, res) => {
-  console.log(req);
   const { id } = req.params;
   const { _id: owner } = req.user;
 
