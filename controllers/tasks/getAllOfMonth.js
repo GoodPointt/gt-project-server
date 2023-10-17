@@ -12,7 +12,7 @@ const getAllOfMonth = async (req, res) => {
   const result = await Task.find(
     { owner, date: { $regex: date, $options: 'i' } },
     '-createdAt -updatedAt'
-  ).populate('owner', 'username');
+  ).populate('owner', 'username avatarURL');
 
   if (!result) {
     throw HttpError(404, 'Not found');
