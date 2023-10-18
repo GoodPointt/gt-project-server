@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { validateBody, authenticate, upload } = require('../../middlewares');
+const { validateBody, authenticate } = require('../../middlewares');
 
 const { schemas } = require('../../models/user');
 
@@ -19,10 +19,6 @@ router.post(
   validateBody(schemas.resetPasswordSchema),
   ctrl.sendResetPassword
 );
-
-
-
-
 
 router.post(
   '/refresh',
