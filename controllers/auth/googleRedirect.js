@@ -44,13 +44,13 @@ const googleRedirect = async (req, res) => {
       id: user._id,
     };
 
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
       expiresIn: '23h',
     });
 
-    await User.findByIdAndUpdate(user._id, { token });
+    await User.findByIdAndUpdate(user._id, { refreshToken });
 
-    return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`);
+    return res.redirect(`${process.env.FRONTEND_URL}?token=${refreshToken}`);
   }
 
   const userBody = {
@@ -66,13 +66,13 @@ const googleRedirect = async (req, res) => {
     id: newUser._id,
   };
 
-  const token = jwt.sign(payload, process.env.SECRET_KEY, {
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
     expiresIn: '23h',
   });
 
-  await User.findByIdAndUpdate(newUser._id, { token });
+  await User.findByIdAndUpdate(newUser._id, { refreshToken });
 
-  return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`);
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${refreshToken}`);
 };
 
 module.exports = googleRedirect;

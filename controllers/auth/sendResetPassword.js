@@ -1,14 +1,14 @@
-const { User } = require("../../models/user");
-const { sendEmailSendGrid, HttpError } = require("../../utils");
-const { nanoid } = require("nanoid");
-const bcrypt = require("bcrypt");
+const { User } = require('../../models/user');
+const { sendEmailSendGrid, HttpError } = require('../../utils');
+const { nanoid } = require('nanoid');
+const bcrypt = require('bcrypt');
 
 const sendResetPassword = async (req, res) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email });
 
-  if (!user) throw HttpError(401, "User does not exist");
+  if (!user) throw HttpError(401, 'User does not exist');
 
   const newPassword = nanoid();
   const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -17,7 +17,7 @@ const sendResetPassword = async (req, res) => {
     password: hashedPassword,
   });
 
-  //   const resetToken = jwt.sign({ email: user.email }, SECRET_KEY, {
+  //   const resetToken = jwt.sign({ email: user.email }, ACCESS_SECRET_KEY, {
   //     expiresIn: "1h",
   //   });
 
@@ -27,13 +27,13 @@ const sendResetPassword = async (req, res) => {
 
   const msg = {
     to: email,
-    subject: "New ",
+    subject: 'GooseTrack password reset ',
     html: `Your new password is ${newPassword}`,
   };
 
   sendEmailSendGrid(msg);
 
-  res.status(200).json({ message: "Reset email sent successfully" });
+  res.status(200).json({ message: 'Reset email sent successfully' });
 };
 
 module.exports = sendResetPassword;

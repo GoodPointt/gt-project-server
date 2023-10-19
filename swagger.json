@@ -1099,9 +1099,9 @@
 
       "RefreshRequest": {
         "type": "object",
-        "required": ["token"],
+        "required": ["refreshToken"],
         "properties": {
-          "token": {
+          "refreshToken": {
             "type": "string",
             "description": "User's token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
@@ -1158,9 +1158,14 @@
       "RefreshResponse": {
         "type": "object",
         "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "User's access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
+          },
           "token": {
             "type": "string",
-            "description": "User's token",
+            "description": "User's refresh token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
           },
           "user": {
