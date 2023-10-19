@@ -18,8 +18,19 @@ router.patch(
   ctrl.editProfile
 );
 
-router.patch('/edit/password', authenticate, validateBody(schemas.changePasswordSchema), ctrl.changePassword)
+router.patch(
+  '/edit/password',
+  authenticate,
+  validateBody(schemas.changePasswordSchema),
+  ctrl.changePassword
+);
 
-router.delete('/edit/delete-user', authenticate, validateBody(schemas.deleteUserSchema), ctrl.deleteUser)
+//router.delete('/edit/delete-user', authenticate, validateBody(schemas.deleteUserSchema), ctrl.deleteUser)
+router.delete(
+  '/delete/:userId',
+  authenticate,
+  validateBody(schemas.deleteUserSchema),
+  ctrl.deleteUser
+);
 
 module.exports = router;

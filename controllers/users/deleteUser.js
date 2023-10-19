@@ -1,16 +1,35 @@
-const { User } = require("../../models/user");
-const { HttpError } = require("../../utils");
+const bcrypt = require('bcrypt');
 
+const { HttpError } = require('../../../utils');
+const { User } = require('../../models/user');
 
 const deleteUser = async (req, res) => {
-    const { _id, email } = req.user
+  const userId = req.params.userId;
+  console.log(userId);
 
-    const deleteUser = await User.findByIdAndRemove({ _id })
-    if (!deleteUser) throw HttpError(404, "User not found")
+  const payload = {
+    _id: userId,
+  };
 
-    res.status(200).json({
-        "message": `User ${email}  delete success`
-    })
-}
+  const user = await User.findById(payload);
+  console.log(user);
 
-module.exports = deleteUser
+  if (!user) {
+    throw HttpError(404, "User with the ID doesn't exist.");
+  }
+
+  const { password } = req.body;
+  console.log(password);
+
+  const isPasswordCompare = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordCompare) {
+    throw HttpError(401, 'Password invalid');
+  }
+
+  await User.findByIdAndRemove(user._id);
+
+  res.status(200).json({ message: 'Account successfully deleted.' });
+};
+
+module.exports = deleteUser;
