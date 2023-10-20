@@ -3,10 +3,14 @@ const bcrypt = require("bcrypt");
 const { HttpError } = require("../../utils");
 
 const changePassword = async (req, res) => {
-    const { _id } = req.user
-    const { password } = req.body
+    const { _id, password } = req.user
+    const { newPassword, oldPassword } = req.body
 
-    const hashedNewPassword = await bcrypt.hash(password, 10);
+    const isComparePassword = await bcrypt.compare(oldPassword, password)
+
+    if (!isComparePassword) throw HttpError(401, "Password invalid")
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
     const user = await User.findByIdAndUpdate(_id, { password: hashedNewPassword }, { new: true })
 

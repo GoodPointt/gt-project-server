@@ -132,17 +132,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User logout",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
 
         "requestBody": {
@@ -211,17 +201,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User refresh",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": { "Bearer": [] },
         "requestBody": {
           "description": "Refresh object",
@@ -278,17 +258,7 @@
       "get": {
         "tags": ["User"],
         "summary": "Get current user info",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -317,17 +287,7 @@
       "patch": {
         "tags": ["User"],
         "summary": "Edit user info",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "User's object",
@@ -379,23 +339,13 @@
       "patch": {
         "tags": ["User"],
         "summary": "Edit user password, min 6 characters",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "User's object",
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EditPasswordRequest"
               }
@@ -418,7 +368,7 @@
             "content": {}
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Password invalid",
             "content": {}
           },
           "404": {
@@ -437,27 +387,17 @@
       }
     },
 
-    "/users/edit/delete-user": {
+    "/users/delete": {
       "delete": {
         "tags": ["User"],
         "summary": "Delete user",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "User's object",
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/DeleteUserRequest"
               }
@@ -539,17 +479,7 @@
         "tags": ["Reviews"],
         "summary": "Get own review",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -585,17 +515,7 @@
       "post": {
         "tags": ["Reviews"],
         "summary": "Add own review",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Review's object",
@@ -651,17 +571,7 @@
       "patch": {
         "tags": ["Reviews"],
         "summary": "Update own review",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Review's object",
@@ -713,17 +623,7 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete own review",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -757,15 +657,6 @@
         "tags": ["Tasks"],
         "summary": "Get all tasks of period",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          },
           {
             "in": "query",
             "name": "date",
@@ -805,17 +696,7 @@
       "post": {
         "tags": ["Tasks"],
         "summary": "Add a task",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Task's object",
@@ -860,15 +741,6 @@
         "tags": ["Tasks"],
         "summary": "Edit the task",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          },
           {
             "name": "id",
             "in": "path",
@@ -935,15 +807,6 @@
         "tags": ["Tasks"],
         "summary": "Delete the task",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "The token issued to the current user."
-          },
           {
             "name": "id",
             "in": "path",
@@ -1018,6 +881,12 @@
             "description": "User's token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
           },
+          "refreshToken": {
+            "type": "string",
+            "description": "User's refreshToken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgNqwe"
+          },
+
           "user": {
             "type": "object",
             "properties": {
@@ -1116,6 +985,11 @@
             "type": "string",
             "description": "User's token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgN0cw"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "User's refreshToken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjOWYxOTUzM2RlNmExMzdkMzU0MiIsImlhdCI6MTY5MTc1MjQ3MiwiZXhwIjoxNjkxODM1MjcyfQ.oQR34DYaWTokYp8swtaQpa0ZojI8x0LqAqokKHgNqwe"
           },
           "user": {
             "type": "object",
@@ -1242,24 +1116,29 @@
 
       "EditPasswordRequest": {
         "type": "object",
-        "required": ["password"],
+        "required": ["oldPassword", "newPassword"],
         "properties": {
-          "password": {
+          "oldPassword": {
             "type": "string",
-            "description": "User's password",
+            "description": "User's oldPassword",
             "example": "qwerty"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "User's newPassword",
+            "example": "qwerty123"
           }
         }
       },
 
       "DeleteUserRequest": {
         "type": "object",
-        "required": ["_id"],
+        "required": ["password"],
         "properties": {
-          "_id": {
+          "password": {
             "type": "string",
-            "description": "User's id",
-            "example": "652a655e8ec5354a9a37f333"
+            "description": "User's password",
+            "example": "qwerty123"
           }
         }
       },
@@ -1314,10 +1193,10 @@
       "EditPasswordResponse": {
         "type": "object",
         "properties": {
-          "password": {
+          "message": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "",
+            "example": "Password change success"
           }
         }
       },
