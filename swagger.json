@@ -406,7 +406,7 @@
         },
         "responses": {
           "200": {
-            "description": "`User ${email}  delete success`",
+            "description": "Account successfully deleted.",
             "content": {
               "application/json": {
                 "schema": {
@@ -627,7 +627,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "ID of the task",
+            "description": "ID of the review",
             "required": true,
             "schema": {
               "type": "string"
@@ -1195,7 +1195,7 @@
           "message": {
             "type": "string",
             "description": "",
-            "example": "User ${email} delete success"
+            "example": "Account successfully deleted."
           }
         }
       },
