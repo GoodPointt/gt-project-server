@@ -202,7 +202,7 @@
         "tags": ["Auth"],
         "summary": "User refresh",
         "parameters": [],
-        "security": { "Bearer": [] },
+        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Refresh object",
           "required": true,
@@ -623,7 +623,17 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete own review",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
