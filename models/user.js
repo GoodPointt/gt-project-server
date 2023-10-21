@@ -115,7 +115,12 @@ const resetPasswordSchema = Joi.object({
 });
 
 const changePasswordSchema = Joi.object({
-  password: Joi.string().required().min(6).messages({
+  newPassword: Joi.string().required().min(6).messages({
+    'string.base': `"password" should be a type of 'text'`,
+    'string.empty': `"password" cannot be an empty field`,
+    'string.min': `"password" should have a minimum length of {#limit}`,
+  }),
+  oldPassword: Joi.string().required().min(6).messages({
     'string.base': `"password" should be a type of 'text'`,
     'string.empty': `"password" cannot be an empty field`,
     'string.min': `"password" should have a minimum length of {#limit}`,
@@ -154,10 +159,6 @@ const deleteUserSchema = Joi.object({
 const refreshUserJoiSchema = Joi.object({
   refreshToken: Joi.string().required(),
 });
-
-// const deleteUserSchema = Joi.object({
-//   _id: Joi.string().required(),
-// });
 
 const schemas = {
   userSignupJoiSchema,

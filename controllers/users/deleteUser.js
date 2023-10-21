@@ -1,30 +1,28 @@
 const bcrypt = require('bcrypt');
 
-
 const { User } = require('../../models/user');
 const { HttpError } = require('../../utils');
 
 const deleteUser = async (req, res) => {
-    const { _id } = req.user
-    //   console.log(userId);
+  const { _id } = req.user;
 
-    const user = await User.findById(_id);
+  const user = await User.findById(_id);
 
-    if (!user) {
-        throw HttpError(404, "User with the ID doesn't exist.");
-    }
+  if (!user) {
+    throw HttpError(404, "User with the ID doesn't exist.");
+  }
 
-    const { password } = req.body;
+  const { password } = req.body;
 
-    const isPasswordCompare = await bcrypt.compare(password, user.password);
+  const isPasswordCompare = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordCompare) {
-        throw HttpError(401, 'Password invalid');
-    }
+  if (!isPasswordCompare) {
+    throw HttpError(400, 'Password invalid');
+  }
 
-    await User.findByIdAndRemove(user._id);
+  await User.findByIdAndRemove(user._id);
 
-    res.status(200).json({ message: 'Account successfully deleted.' });
+  res.status(200).json({ message: 'Account successfully deleted.' });
 };
 
 module.exports = deleteUser;

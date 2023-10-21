@@ -15,10 +15,6 @@ const logIn = async (req, res) => {
 
   if (!user) throw HttpError(401, 'Email or password invalid');
 
-  console.log(password);
-
-  console.log(user.password);
-
   const isPasswordCompare = await bcrypt.compare(password, user.password);
 
   if (!isPasswordCompare) throw HttpError(401, 'Email or password invalid');

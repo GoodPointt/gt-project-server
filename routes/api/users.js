@@ -21,11 +21,15 @@ router.patch(
 router.patch(
   '/edit/password',
   authenticate,
-  // validateBody(schemas.changePasswordSchema),
+  validateBody(schemas.changePasswordSchema),
   ctrl.changePassword
 );
 
-router.delete('/delete', authenticate, validateBody(schemas.deleteUserSchema), ctrl.deleteUser)
-  ;
+router.delete(
+  '/delete',
+  authenticate,
+  validateBody(schemas.deleteUserSchema),
+  ctrl.deleteUser
+);
 
 module.exports = router;
