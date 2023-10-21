@@ -1,5 +1,5 @@
-const { HttpError } = require('../../middlewares');
 const { User } = require('../../models/user');
+const { HttpError } = require('../../utils');
 
 const editProfile = async (req, res) => {
   const { _id } = req.user;

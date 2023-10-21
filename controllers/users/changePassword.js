@@ -5,6 +5,8 @@ const { HttpError } = require('../../utils');
 const changePassword = async (req, res) => {
   const { _id, password } = req.user;
   const { newPassword, oldPassword } = req.body;
+  if (newPassword === oldPassword)
+    throw HttpError(400, 'New and old password can not be equals');
 
   const isComparePassword = await bcrypt.compare(oldPassword, password);
 
