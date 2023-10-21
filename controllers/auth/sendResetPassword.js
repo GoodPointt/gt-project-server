@@ -17,14 +17,6 @@ const sendResetPassword = async (req, res) => {
     password: hashedPassword,
   });
 
-  //   const resetToken = jwt.sign({ email: user.email }, ACCESS_SECRET_KEY, {
-  //     expiresIn: "1h",
-  //   });
-
-  //   const newuser = await User.findByIdAndUpdate(user._id, {
-  //     resetToken: resetToken,
-  //   });
-
   const msg = {
     to: email,
     subject: 'GooseTrack password reset ',
