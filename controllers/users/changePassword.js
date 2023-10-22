@@ -6,11 +6,11 @@ const changePassword = async (req, res) => {
   const { _id, password } = req.user;
   const { newPassword, oldPassword } = req.body;
   if (newPassword === oldPassword)
-    throw HttpError(400, 'New and old password can not be equals');
+    throw HttpError(400, 'New and old password cant be equals');
 
   const isComparePassword = await bcrypt.compare(oldPassword, password);
 
-  if (!isComparePassword) throw HttpError(400, 'Password invalid');
+  if (!isComparePassword) throw HttpError(401, 'Password invalid');
 
   const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 

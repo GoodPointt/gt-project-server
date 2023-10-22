@@ -17,7 +17,7 @@ const deleteUser = async (req, res) => {
   const isPasswordCompare = await bcrypt.compare(password, user.password);
 
   if (!isPasswordCompare) {
-    throw HttpError(400, 'Password invalid');
+    throw HttpError(401, 'Password invalid');
   }
 
   await User.findByIdAndRemove(user._id);
