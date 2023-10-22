@@ -29,7 +29,7 @@ reviewSchema.post('save', handleMongooseError);
 
 const reviewJoiSchema = Joi.object({
   rating: Joi.number().min(1).max(5).required(),
-  text: Joi.string().max(254).required(),
+  text: Joi.string().max(300).required(),
 });
 
 const Review = model('review', reviewSchema);
