@@ -8,7 +8,7 @@ const sendResetPassword = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) throw HttpError(401, 'User does not exist');
+  if (!user) throw HttpError(404, 'User does not exist');
 
   const newPassword = nanoid();
   const hashedPassword = await bcrypt.hash(newPassword, 10);
