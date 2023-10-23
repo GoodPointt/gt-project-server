@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/user');
 const { HttpError } = require('../../utils');
+const { Review } = require('../../models/review');
+const { Task } = require('../../models/task');
 
 const deleteUser = async (req, res) => {
   const { _id } = req.user;
@@ -19,6 +21,10 @@ const deleteUser = async (req, res) => {
   if (!isPasswordCompare) {
     throw HttpError(401, 'Password invalid');
   }
+
+  await Review.deleteMany({ owner: user._id });
+
+  await Task.deleteMany({ owner: user._id });
 
   await User.findByIdAndRemove(user._id);
 
