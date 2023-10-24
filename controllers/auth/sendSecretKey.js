@@ -8,11 +8,14 @@ const sendSecretKey = async (req, res) => {
 
   if (!user) throw HttpError(404, 'User does not exist');
 
-  const secretKey = await bcrypt.hash(_id.toString(), 10);
+  const secretKey = await bcrypt.hash(_id.toString(), 1);
 
   const msg = {
+    from: {
+      name: 'GooseTrack',
+    },
     to: email,
-    subject: 'GooseTrack account delete ',
+    subject: 'GooseTrack account delete',
     html: `<p>Enter this secret key to permanently delete your account:</p> <h4>${secretKey}</h4>`,
   };
 
