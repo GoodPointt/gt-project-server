@@ -13,7 +13,7 @@ const sendSecretKey = async (req, res) => {
   const msg = {
     to: email,
     subject: 'GooseTrack account delete ',
-    html: `<p>Enter this secret key to permanently delete your account:</p> <p>${secretKey}</p>`,
+    html: `<p>Enter this secret key to permanently delete your account:</p> <h1>${secretKey}</h1>`,
   };
 
   sendEmailSendGrid(msg);
