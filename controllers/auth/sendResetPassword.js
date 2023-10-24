@@ -20,7 +20,7 @@ const sendResetPassword = async (req, res) => {
   const msg = {
     to: email,
     subject: 'GooseTrack password reset ',
-    html: `<p>Your new password is </p> <p>${newPassword}</p>`,
+    html: `<p>Your new password is </p> <h1>${newPassword}</h1>`,
   };
 
   sendEmailSendGrid(msg);
