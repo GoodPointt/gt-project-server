@@ -14,11 +14,14 @@ const deleteUser = async (req, res) => {
     throw HttpError(404, "User with the ID doesn't exist.");
   }
 
-  const { password } = req.body;
+  const { secretKey } = req.body;
 
-  const isPasswordCompare = await bcrypt.compare(password, user.password);
+  const isSecretKeyCompare = await bcrypt.compare(
+    user._id.toString(),
+    secretKey
+  );
 
-  if (!isPasswordCompare) {
+  if (!isSecretKeyCompare) {
     throw HttpError(401, 'Password invalid');
   }
 
