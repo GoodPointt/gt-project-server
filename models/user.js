@@ -152,11 +152,10 @@ const editUserProfileJoiSchema = Joi.object({
 });
 
 const deleteUserSchema = Joi.object({
-  password: Joi.string().required().min(6).messages({
-    'string.base': `"password" !should be a type of 'text'`,
-    'string.empty': `"password" !cannot be an empty field`,
-    'string.min': `"password" !should have a minimum length of {#limit}`,
-    'any.required': `"password" !is a required field`,
+  secretKey: Joi.string().required().messages({
+    'string.base': `"secretKey" !should be a type of 'text'`,
+    'string.empty': `"secretKey" !cannot be an empty field`,
+    'any.required': `"secretKey" !is a required field`,
   }),
 });
 

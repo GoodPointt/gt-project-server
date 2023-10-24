@@ -19,6 +19,7 @@ router.post(
   validateBody(schemas.resetPasswordSchema),
   ctrl.sendResetPassword
 );
+router.get('/removekey', authenticate, ctrl.sendSecretKey);
 
 router.post(
   '/refresh',
