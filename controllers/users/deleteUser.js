@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt');
-
 const { User } = require('../../models/user');
 const { HttpError } = require('../../utils');
 const { Review } = require('../../models/review');
@@ -16,10 +14,7 @@ const deleteUser = async (req, res) => {
 
   const { secretKey } = req.body;
 
-  const isSecretKeyCompare = await bcrypt.compare(
-    user._id.toString(),
-    secretKey
-  );
+  const isSecretKeyCompare = user._id.toString() === secretKey;
 
   if (!isSecretKeyCompare) {
     throw HttpError(401, 'Secret key is invalid');

@@ -1,6 +1,5 @@
 const { User } = require('../../models/user');
 const { sendEmailSendGrid, HttpError } = require('../../utils');
-const bcrypt = require('bcrypt');
 
 const sendSecretKey = async (req, res) => {
   const { email, _id } = req.user;
@@ -8,7 +7,7 @@ const sendSecretKey = async (req, res) => {
 
   if (!user) throw HttpError(404, 'User does not exist');
 
-  const secretKey = await bcrypt.hash(_id.toString(), 1);
+  const secretKey = _id.toString();
 
   const msg = {
     from: {

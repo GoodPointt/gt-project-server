@@ -18,6 +18,9 @@ const sendResetPassword = async (req, res) => {
   });
 
   const msg = {
+    from: {
+      name: 'GooseTrack',
+    },
     to: email,
     subject: 'GooseTrack password reset ',
     html: `<p>Your new password is </p> <h4>${newPassword}</h4>`,
