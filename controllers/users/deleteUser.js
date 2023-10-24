@@ -22,7 +22,7 @@ const deleteUser = async (req, res) => {
   );
 
   if (!isSecretKeyCompare) {
-    throw HttpError(401, 'Password invalid');
+    throw HttpError(401, 'Secret key is invalid');
   }
 
   await Review.deleteMany({ owner: user._id });
