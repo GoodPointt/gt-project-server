@@ -1,5 +1,13 @@
 const getCurrent = async (req, res) => {
-  const { email, username, avatarURL, birthday, skype, phone } = req.user;
+  const {
+    email,
+    username,
+    avatarURL,
+    birthday,
+    skype,
+    phone,
+    isGoogleAuth = false,
+  } = req.user;
 
   res.status(200).json({
     email,
@@ -8,6 +16,7 @@ const getCurrent = async (req, res) => {
     birthday,
     skype,
     phone,
+    isGoogleAuth,
   });
 };
 

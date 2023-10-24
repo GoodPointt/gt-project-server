@@ -46,6 +46,10 @@ const userSchema = new Schema(
       type: String,
       default: '',
     },
+    isGoogleAuth: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,

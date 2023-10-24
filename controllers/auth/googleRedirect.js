@@ -34,10 +34,6 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  const password = nanoid();
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   const user = await User.findOne({ email: userData.data.email });
   if (user) {
     const payload = {
@@ -53,11 +49,15 @@ const googleRedirect = async (req, res) => {
     return res.redirect(`${process.env.FRONTEND_URL}?token=${refreshToken}`);
   }
 
+  const password = nanoid();
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const userBody = {
     email: userData.data.email,
     username: userData.data.name,
     avatarURL: userData.data.picture,
     password: hashedPassword,
+    isGoogleAuth: true,
   };
 
   const newUser = await User.create(userBody);
