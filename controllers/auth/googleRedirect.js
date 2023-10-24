@@ -44,7 +44,10 @@ const googleRedirect = async (req, res) => {
       expiresIn: '23h',
     });
 
-    await User.findByIdAndUpdate(user._id, { refreshToken });
+    await User.findByIdAndUpdate(user._id, {
+      refreshToken,
+      isGoogleAuth: true,
+    });
 
     return res.redirect(`${process.env.FRONTEND_URL}?token=${refreshToken}`);
   }
@@ -70,7 +73,9 @@ const googleRedirect = async (req, res) => {
     expiresIn: '23h',
   });
 
-  await User.findByIdAndUpdate(newUser._id, { refreshToken });
+  await User.findByIdAndUpdate(newUser._id, {
+    refreshToken,
+  });
 
   return res.redirect(`${process.env.FRONTEND_URL}?token=${refreshToken}`);
 };
