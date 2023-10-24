@@ -623,17 +623,7 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete own review",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the review",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
