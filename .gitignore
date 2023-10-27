@@ -1,5 +1,5 @@
 node_modules/
 .env
-.env.locale
+.env.local
 .idea
 .vscode
