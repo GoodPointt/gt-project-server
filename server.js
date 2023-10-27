@@ -20,7 +20,7 @@ mongoose
     process.exit(1);
   });
 
-const job = schedule.scheduleJob('*/5 * * * *', async () => {
+const job = schedule.scheduleJob('*/14 * * * *', async () => {
   try {
     const response = await axios.get(REQ_URL);
     if (response.status === 200) {
